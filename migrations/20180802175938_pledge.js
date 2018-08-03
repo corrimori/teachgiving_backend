@@ -4,7 +4,7 @@ exports.up = function(knex, Promise) {
     table.increments()
     table.integer('kid_id').notNullable().references('kid.id')
     table.integer('user_id').notNullable().references('users.id')
-    table.integer('pledgeAmount').notNullable()
+    table.integer('pledgeAmount')
   })
 };
 
