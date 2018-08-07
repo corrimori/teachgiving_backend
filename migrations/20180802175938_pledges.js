@@ -5,6 +5,7 @@ exports.up = function(knex, Promise) {
     table.integer('kid_id').notNullable().references('kid.id')
     table.integer('user_id').notNullable().references('users.id')
     table.integer('pledgeAmount')
+    table.integer('numOfWeeks')
   })
 };
 

@@ -6,7 +6,7 @@ const knex = require('../knex');
 // LIST all users
 router.get('/', (req, res, next) => {
     // USE KNEX to GET all users
-    knex('users')
+    knex('kids')
     .then((data) => {
       console.log('data', data)
       res.send(data)
@@ -14,12 +14,23 @@ router.get('/', (req, res, next) => {
   })
 
   // READ one user
-  // router.get('/:userid', (req, res, next) => {
+  // router.get('/:kidid', (req, res, next) => {
   //   // USE KNEX to GET a specific user
-  //   knex('users')
+  //   knex('kids')
+  //   .where('id', req.params.kidid)
+  //   .then((data)) => {
+  //     console.log('the specific user', data)
+  //     res/send(data)
+  //   }
+  // })
+
+  // READ image (avatar)
+  // router.get('/:avatarid', (req, res, next) => {
+  //   // USE KNEX to GET a specific user
+  //   knex('avatar')
   //   .where('id', req.params.userid)
   //   .then((data)) => {
-  //     console.lgo('the specific user'. data)
+  //     console.log('the specific user', data)
   //     res/send(data)
   //   }
   // })
