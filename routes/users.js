@@ -13,15 +13,21 @@ router.get('/', (req, res, next) => {
     })
   })
 
-  // READ one user
-  // router.get('/:userid', (req, res, next) => {
-  //   // USE KNEX to GET a specific user
-  //   knex('users')
-  //   .where('id', req.params.userid)
-  //   .then((data)) => {
-  //     console.lgo('the specific user'. data)
-  //     res/send(data)
-  //   }
-  // })
+// USE KNEX to GET a specific user
+router.get('/:userid', (req, res, next) => {
+  knex('users')
+  .where('id', req.params.userid)
+  // user is data
+  .then((user) => {
+    let newUserArray = user.map((user) => {
+      delete user.created_at
+      delete user.updated_at
+      console.log('user>>', user);
+      return user;
+    })
+    console.log('the specific user>>', newUserArray)
+    res.send(newUserArray)
+  })
+})
 
 module.exports = router;
