@@ -28,26 +28,37 @@ router.get('/:pledgeid', (req, res, next) => {
   })
 })
 
-// CREATE one pledge
+
+//===============================================+========
+  // {id: 4, kids_id: 1, charities_id: 4, pledgeAmount: 0.25, numOfWeeks: 2},
+
+//create a join for kids_id & pledges
+// knex('pledges')
+// .join('kids_id', 'kids.id', '=', 'contacts.kids_id')
+// .select('pledges.id', 'contacts.phone')
+//===============================================+========
+
+
+//create one new pledge
 router.post('/', (req, res, next) => {
-  res.send('pledges')
-  // Look for some provided Body data
-  console.log('req.body', req.body)
-  console.log('req.params.pledgeAmt', req.params.pledgeAmt)
-
-
-  // create new user in DB with KNEX
-  // SQL INSERT
-  // knex('users')
-  // .insert({name: req.body.name})
-  // .returning('*')
-  // .then((result) => {
-  //   let insertedRecord = result[0]
-  //   console.log('data', insertedRecord)
-  //   // conclude the route with res.send
-  //   res.send(insertedRecord)
-  // })
-
+  console.log('REQ.BODY>>>', req.body);
+  console.log("Charities id ", req.body.charities_id)
+  // create a new pledge
+  knex('pledges')
+  .insert({ kids_id: req.body.kids_id,
+      charities_id: req.body.charities_id,
+      pledgeAmount: req.body.pledgeAmount,
+      numOfWeeks: req.body.numOfWeeks })
+  .returning('*')
+  .then((result) => {
+    console.log(result)
+    res.statusCode = 200;
+    let insertedRecord = result[0]
+    console.log('data', insertedRecord)
+    res.send(insertedRecord)
+  })
+  // add catch(err) here
 })
+
 
 module.exports = router;
