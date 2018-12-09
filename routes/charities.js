@@ -30,14 +30,6 @@ router.get('/:charitiesid', (req, res, next) => {
 module.exports = router;
 
 
-// // GET charities, go through each one
-// router.get('/', function (req, res, next) {
-//   knex('charities')
-//   .then((data) => {
-//     let newCharitiesArr = events.map((data) => {
-//       console.log('data', data)
-//       // return charities;
-//     })
 
 // Breaking here =================================
 //     res.status(200).send(newCharitiesArr); // 200 = ok

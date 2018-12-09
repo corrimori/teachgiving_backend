@@ -11,6 +11,7 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const charitiesRouter = require('./routes/charities');
 const pledgesRouter = require('./routes/pledges')
+// const dashboardRouter = require('./routes/dashboard')
 // const avatarsRouter = require('.routes/avatars')
 // const kidsRouter = require('.routes/kids')
 
@@ -27,6 +28,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors())
+app.use(express.static('public'))
 
 app.use('/', indexRouter);
 app.use('/charities', charitiesRouter)

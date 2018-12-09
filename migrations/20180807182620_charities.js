@@ -4,6 +4,7 @@ exports.up = function(knex, Promise) {
     table.string('name').notNullable()
     table.string('description').notNullable()
     table.string('url')
+    table.string('image_path')
   })
 };
 
