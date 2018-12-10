@@ -1,18 +1,40 @@
-'use strict';
-
 module.exports = {
   development: {
     client: 'pg',
-    connection: 'postgres://localhost/giving_dev'
-  },
-
-  test: {
-    client: 'pg',
-    connection: 'postgres://localhost/giving_test'
+    connection: {
+      host: 'localhost',
+      database: 'giving_dev',
+    },
+    migrations: {
+      directory: './db/migrations',
+    },
+    seeds: {
+      directory: './db/seeds',
+    },
   },
 
   production: {
     client: 'pg',
-    connection: process.env.DATABASE_URL
-  }
+    connection: process.env.DATABASE_URL,
+    migrations: {
+      directory: './db/migrations',
+    },
+    seeds: {
+      directory: './db/seeds',
+    },
+  },
+
+  test: {
+    client: 'pg',
+    connection: {
+      host: 'localhost',
+      database: 'giving_dev_test',
+    },
+    migrations: {
+      directory: './db/migrations',
+    },
+    seeds: {
+      directory: './db/seeds',
+    },
+  },
 };
