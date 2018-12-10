@@ -12,6 +12,9 @@ app.use(cors());
 const UserRoutes = require('./src/routes/users.js');
 app.use('/users', UserRoutes);
 
+const avatarRoutes = require('./src/routes/avatars.js');
+app.use('/avatars', avatarRoutes);
+
 // any other route is not allowed
 app.all('*', (req, res, next) => res.sendStatus(404));
 
