@@ -18,6 +18,9 @@ app.use('/kids', kidRoutes);
 const avatarRoutes = require('./src/routes/avatars.js');
 app.use('/avatars', avatarRoutes);
 
+const charitiesRoutes = require('./src/routes/charities.js');
+app.use('/charities', charitiesRoutes);
+
 // any other route is not allowed
 app.all('*', (req, res, next) => res.sendStatus(404));
 

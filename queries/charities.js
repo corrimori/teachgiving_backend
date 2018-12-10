@@ -1,15 +1,15 @@
 const knex = require('./db');
 
-getAllKids = () => {
-  return knex('kids').orderBy('name', 'ASC');
+getAllCharities = () => {
+  return knex('charities').orderBy('name', 'ASC');
 };
 
-getKidById = id => {
-  return knex('kids').where('id', id);
+getCharityById = id => {
+  return knex('charities').where('id', id);
 };
 
-createKid = body => {
-  return knex('kids')
+createCharity = body => {
+  return knex('charities')
     .insert(body)
     .returning('*')
     .catch(err => {
@@ -19,16 +19,16 @@ createKid = body => {
     });
 };
 
-updateKid = (id, body) => {
+updateCharity = (id, body) => {
   return (
-    knex('kids')
+    knex('charities')
       .where('id', id)
       // .update(body)
       .update({
         name: body.name,
-        user_id: body.user_id,
-        avatar_id: body.avatar_id,
-        runningTotal: body.runningTotal,
+        price: body.price,
+        description: body.description,
+        tags: body.tags,
       })
       .returning('*')
       .catch(err => {
@@ -39,8 +39,8 @@ updateKid = (id, body) => {
   );
 };
 
-deleteKidById = id => {
-  return knex('kids')
+deleteCharityById = id => {
+  return knex('charities')
     .where('id', id)
     .del()
     .returning('*')
@@ -52,9 +52,9 @@ deleteKidById = id => {
 };
 
 module.exports = {
-  getAllKids,
-  getKidById,
-  createKid,
-  updateKid,
-  deleteKidById,
+  getAllCharities,
+  getCharityById,
+  createCharity,
+  updateCharity,
+  deleteCharityById,
 };

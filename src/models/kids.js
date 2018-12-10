@@ -18,11 +18,35 @@ const getKidById = id => {
   });
 };
 
+const createKid = body => {
+  console.log('body>>', body);
+  kid = kidsQuery.createKid(body);
+
+  return kid.then(result => {
+    return !result ? { error: 'error creating kid', status: 500 } : result;
+  });
+};
+
+const updateKid = (id, body) => {
+  kid = kidsQuery.updateKid(id, body);
+
+  return kid.then(result => {
+    return !result ? { error: 'error updating kid', status: 500 } : result;
+  });
+};
+
+const deleteKidById = id => {
+  kid = kidsQuery.deleteKidById(id);
+
+  return kid.then(result => {
+    return !result ? { error: 'error deleting kid', status: 500 } : result;
+  });
+};
+
 module.exports = {
   getAllKids,
   getKidById,
-  // getKidWithNestedTags,
-  // createKid,
-  // updateKid,
-  // deleteKidById,
+  createKid,
+  updateKid,
+  deleteKidById,
 };

@@ -1,7 +1,7 @@
-const model = require('../models/kids');
+const model = require('../models/charities');
 
-getAllKids = (req, res, next) => {
-  let promise = model.getAllKids();
+getAllCharities = (req, res, next) => {
+  let promise = model.getAllCharities();
 
   promise.then(result => {
     return result.error ? next(result) : res.status(200).json(result);
@@ -12,9 +12,9 @@ getAllKids = (req, res, next) => {
   });
 };
 
-getKidById = (req, res, next) => {
+getCharityById = (req, res, next) => {
   let id = req.params.id;
-  let promise = model.getKidById(id);
+  let promise = model.getCharityById(id);
 
   promise.then(result => {
     return result.error ? next(result) : res.status(200).json(result);
@@ -25,9 +25,9 @@ getKidById = (req, res, next) => {
   });
 };
 
-createKid = (req, res, next) => {
+createCharity = (req, res, next) => {
   console.log(req.body);
-  let promise = model.createKid(req.body);
+  let promise = model.createCharity(req.body);
 
   promise.then(result => {
     return result.error ? next(result) : res.status(200).json(result);
@@ -38,9 +38,9 @@ createKid = (req, res, next) => {
   });
 };
 
-updateKid = (req, res, next) => {
+updateCharity = (req, res, next) => {
   let id = req.params.id;
-  let promise = model.updateKid(id, req.body);
+  let promise = model.updateCharity(id, req.body);
 
   promise.then(result => {
     return result.error ? next(result) : res.status(200).json(result);
@@ -51,9 +51,9 @@ updateKid = (req, res, next) => {
   });
 };
 
-deleteKidById = (req, res, next) => {
+deleteCharityById = (req, res, next) => {
   let id = req.params.id;
-  let promise = model.deleteKidById(id);
+  let promise = model.deleteCharityById(id);
 
   promise.then(result => {
     return result.error ? next(result) : res.status(204).json(result);
@@ -65,9 +65,9 @@ deleteKidById = (req, res, next) => {
 };
 
 module.exports = {
-  getAllKids,
-  getKidById,
-  createKid,
-  updateKid,
-  deleteKidById,
+  getAllCharities,
+  getCharityById,
+  createCharity,
+  updateCharity,
+  deleteCharityById,
 };
