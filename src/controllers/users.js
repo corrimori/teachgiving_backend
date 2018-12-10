@@ -12,28 +12,61 @@ getAllUsers = (req, res, next) => {
   });
 };
 
-// USE KNEX to GET a specific user
-// router.get('/:userid', (req, res, next) => {
-//   knex('users')
-//     .where('id', req.params.userid)
-//     // user is data
-//     .then(user => {
-//       let newUserArray = user.map(user => {
-//         delete user.created_at;
-//         delete user.updated_at;
-//         console.log('user>>', user);
-//         return user;
-//       });
-//       console.log('the specific user>>', newUserArray);
-//       res.send(newUserArray);
-//     });
-// });
+getUserById = (req, res, next) => {
+  let id = req.params.id;
+  let promise = model.getUserById(id);
+
+  promise.then(result => {
+    return result.error ? next(result) : res.status(200).json(result);
+  });
+
+  promise.catch(error => {
+    next(error);
+  });
+};
+
+createUser = (req, res, next) => {
+  console.log(req.body);
+  let promise = model.createUser(req.body);
+
+  promise.then(result => {
+    return result.error ? next(result) : res.status(200).json(result);
+  });
+
+  promise.catch(error => {
+    next(error);
+  });
+};
+
+updateUser = (req, res, next) => {
+  let id = req.params.id;
+  let promise = model.updateUser(id, req.body);
+
+  promise.then(result => {
+    return result.error ? next(result) : res.status(200).json(result);
+  });
+
+  promise.catch(error => {
+    next(error);
+  });
+};
+
+deleteUserById = id => {
+  return knex('users')
+    .where('id', id)
+    .del()
+    .returning('*')
+    .catch(err => {
+      console.error(err);
+      knex.destroy();
+      process.exit(1);
+    });
+};
 
 module.exports = {
   getAllUsers,
-  // getUserById,
-  // getUserWithNestedTags,
-  // createUser,
-  // updateUser,
-  // deleteUserById
+  getUserById,
+  createUser,
+  updateUser,
+  deleteUserById,
 };
