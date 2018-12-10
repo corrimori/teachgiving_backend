@@ -12,6 +12,9 @@ app.use(cors());
 const UserRoutes = require('./src/routes/users.js');
 app.use('/users', UserRoutes);
 
+const kidRoutes = require('./src/routes/kids.js');
+app.use('/kids', kidRoutes);
+
 const avatarRoutes = require('./src/routes/avatars.js');
 app.use('/avatars', avatarRoutes);
 
