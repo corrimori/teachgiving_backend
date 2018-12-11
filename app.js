@@ -9,8 +9,8 @@ if (process.env.NODE_ENV !== 'test') app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(cors());
 
-const UserRoutes = require('./src/routes/users.js');
-app.use('/users', UserRoutes);
+const userRoutes = require('./src/routes/users.js');
+app.use('/users', userRoutes);
 
 const kidRoutes = require('./src/routes/kids.js');
 app.use('/kids', kidRoutes);
@@ -20,6 +20,9 @@ app.use('/avatars', avatarRoutes);
 
 const charitiesRoutes = require('./src/routes/charities.js');
 app.use('/charities', charitiesRoutes);
+
+const pledgesRoutes = require('./src/routes/pledges.js');
+app.use('/pledges', pledgesRoutes);
 
 // any other route is not allowed
 app.all('*', (req, res, next) => res.sendStatus(404));

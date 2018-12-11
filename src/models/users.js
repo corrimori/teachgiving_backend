@@ -1,6 +1,7 @@
 const usersQuery = require('../../queries/users');
 
 const getAllUsers = () => {
+  console.log('in user models...');
   users = usersQuery.getAllUsers();
 
   return users.then(result => {
@@ -15,6 +16,21 @@ const getUserById = id => {
 
   return user.then(result => {
     return !result ? { error: 'error retreiving user', status: 404 } : result;
+  });
+};
+
+//==========================================================
+//  /:id/kids      gets all kids for a user
+//====================+=====================================
+const fetchKidsForUser = (id, body) => {
+  console.log('in fetch kids for user - models ... ');
+
+  user = usersQuery.fetchKidsForUser(id, body);
+
+  return user.then(result => {
+    return result.length < 1
+      ? { error: 'error retreiving user kids', status: 404 }
+      : result;
   });
 };
 
@@ -46,6 +62,7 @@ const deleteUserById = id => {
 module.exports = {
   getAllUsers,
   getUserById,
+  fetchKidsForUser,
   createUser,
   updateUser,
   deleteUserById,

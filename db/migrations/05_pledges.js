@@ -1,14 +1,16 @@
 exports.up = function(knex, Promise) {
   return knex.schema.createTable('pledges', table => {
     table.increments();
+    table.integer('kid_id');
     table
-      .integer('kids_id')
-      .notNullable()
-      .references('kids.id');
+      .foreign('kid_id')
+      .references('id')
+      .inTable('kids');
+    table.integer('charity_id');
     table
-      .integer('charity_id')
-      .notNullable()
-      .references('charities.id');
+      .foreign('charity_id')
+      .references('id')
+      .inTable('charities');
     table.float('pledgeAmount');
     table.integer('numOfWeeks');
   });

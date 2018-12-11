@@ -1,6 +1,8 @@
 const model = require('../models/users');
 
 getAllUsers = (req, res, next) => {
+  console.log('in user controllers...');
+
   let promise = model.getAllUsers();
 
   promise.then(result => {
@@ -25,8 +27,21 @@ getUserById = (req, res, next) => {
   });
 };
 
+// gets all kids for user
+fetchKidsForUser = (req, res, next) => {
+  console.log('in fetch kids for user - controller ... ');
+  let id = req.params.id;
+  let promise = model.fetchKidsForUser(id, req.body);
+
+  promise.then(result => {
+    return result.error ? next(result) : res.status(200).json(result);
+  });
+  promise.catch(error => {
+    next(error);
+  });
+};
+
 createUser = (req, res, next) => {
-  console.log(req.body);
   let promise = model.createUser(req.body);
 
   promise.then(result => {
@@ -66,6 +81,7 @@ deleteUserById = id => {
 module.exports = {
   getAllUsers,
   getUserById,
+  fetchKidsForUser,
   createUser,
   updateUser,
   deleteUserById,
