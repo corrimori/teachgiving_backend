@@ -6,10 +6,9 @@ const ctrl = require('../controllers/pledges');
 router.get('/', ctrl.getPledges);
 // router.get('/:kid_id', ctrl.getPledgesForKid);
 
-// when kid gives to a specific charity
-// router.post('/', ctrl.createPledge);
-// router.put('/:id', ctrl.updatePledge);
-// router.delete('/:id', ctrl.deletePledge);
+router.post('/', ctrl.createPledge);
+router.put('/:id', ctrl.updatePledge);
+router.delete('/:id', ctrl.deletePledge);
 
 module.exports = router;
 

@@ -18,6 +18,17 @@ const getKidById = id => {
   });
 };
 
+const getPledgesForKid = (id, body) => {
+  console.log('here in get pledges for kid ...');
+  kid = kidsQuery.getPledgesForKid(id, body);
+
+  return kid.then(result => {
+    return !result
+      ? { error: 'error retreiving pledges for kid', status: 404 }
+      : result;
+  });
+};
+
 const createKid = body => {
   console.log('body>>', body);
   kid = kidsQuery.createKid(body);
@@ -46,6 +57,7 @@ const deleteKidById = id => {
 module.exports = {
   getAllKids,
   getKidById,
+  getPledgesForKid,
   createKid,
   updateKid,
   deleteKidById,

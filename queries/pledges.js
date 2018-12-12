@@ -4,26 +4,52 @@ getPledges = () => {
   return knex('pledges');
 };
 
-//====================================================
-//gets all pledges for kid      /pledges/:kid_id
-//====================================================
-getPledgesForKid = (kid_id, body) => {
-  console.log('in getPledges for kid ...  kid_id>>>>>>>', kid_id);
+createPledge = body => {
   return knex('pledges')
-    .join('kids', 'kids.id', '=', 'pledges.kid_id')
-    .join('charities', 'charities.id', '=', 'pledges.charity_id')
-    .select(
-      'pledges.id as id',
-      'kids.id as kidId',
-      'charity.id as charityId',
-      'pledges.pledgeAmt',
-      'pledges.numOfWeeks'
-    )
-    .where('pledges.kid_id', kidId)
-    .distinct();
+    .insert(body)
+    .returning('*')
+    .catch(err => {
+      console.error(err);
+      knex.destroy();
+      process.exit(1);
+    });
+};
+
+updatePledge = (id, body) => {
+  return (
+    knex('pledges')
+      .where('id', id)
+      // kids_id = kids.id
+      .update({
+        kid_id: body.kid_id,
+        charity_id: body.charity_id,
+        pledgeAmount: body.pledgeAmount,
+        numOfWeeks: body.numOfWeeks,
+      })
+      .returning('*')
+      .catch(err => {
+        console.error(err);
+        knex.destroy();
+        process.exit(1);
+      })
+  );
+};
+
+deletePledge = id => {
+  return knex('pledges')
+    .where('id', id)
+    .del()
+    .returning('*')
+    .catch(err => {
+      console.error(err);
+      knex.destroy();
+      process.exit(1);
+    });
 };
 
 module.exports = {
   getPledges,
-  getPledgesForKid,
+  createPledge,
+  updatePledge,
+  deletePledge,
 };

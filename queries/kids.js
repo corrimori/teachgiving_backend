@@ -8,6 +8,27 @@ getKidById = id => {
   return knex('kids').where('id', id);
 };
 
+//====================================================
+//gets all pledges for kid      /pledges/:kid_id????
+//====================================================
+getPledgesForKid = (id, body) => {
+  console.log('pledges for kids ====== queries>>>>>');
+  return knex('pledges')
+    .join('kids', 'kids.id', '=', 'pledges.kid_id')
+    .join('charities', 'charities.id', '=', 'pledges.charity_id')
+    .select(
+      // 'pledges.id as id',
+      'pledges.kid_id',
+      'kids.name as kidName',
+      'pledges.charity_id',
+      'charities.name',
+      'pledges.pledgeAmount',
+      'pledges.numOfWeeks'
+    )
+    .where('pledges.kid_id', id)
+    .distinct();
+};
+
 createKid = body => {
   return knex('kids')
     .insert(body)
@@ -54,6 +75,7 @@ deleteKidById = id => {
 module.exports = {
   getAllKids,
   getKidById,
+  getPledgesForKid,
   createKid,
   updateKid,
   deleteKidById,

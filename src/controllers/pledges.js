@@ -13,24 +13,48 @@ getPledges = (req, res, next) => {
   });
 };
 
-// get all pledges from a charity with id
-// const getPledges = (req, res, next) => {
-//   //de-structure req.params for specified restaurantsId
-//   let { charityId } = req.params;
-//   let promise = model.getPledges(charityId);
+createPledge = (req, res, next) => {
+  console.log(req.body);
+  let promise = model.createPledge(req.body);
 
-// getAllCharities = (req, res, next) => {
-//   let promise = model.getAllCharities();
-//
-//   promise.then(result => {
-//     return result.error ? next(result) : res.status(200).json(result);
-//   });
-//
-//   promise.catch(error => {
-//     next(error);
-//   });
-// };
+  promise.then(result => {
+    return result.error ? next(result) : res.status(200).json(result);
+  });
+
+  promise.catch(error => {
+    next(error);
+  });
+};
+
+updatePledge = (req, res, next) => {
+  let id = req.params.id;
+  let promise = model.updatePledge(id, req.body);
+
+  promise.then(result => {
+    return result.error ? next(result) : res.status(200).json(result);
+  });
+
+  promise.catch(error => {
+    next(error);
+  });
+};
+
+deletePledge = (req, res, next) => {
+  let id = req.params.id;
+  let promise = model.deletePledge(id);
+
+  promise.then(result => {
+    return result.error ? next(result) : res.status(204).json(result);
+  });
+
+  promise.catch(error => {
+    next(error);
+  });
+};
 
 module.exports = {
   getPledges,
+  createPledge,
+  updatePledge,
+  deletePledge,
 };

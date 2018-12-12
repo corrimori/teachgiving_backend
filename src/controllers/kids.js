@@ -25,6 +25,19 @@ getKidById = (req, res, next) => {
   });
 };
 
+getPledgesForKid = (req, res, next) => {
+  let id = req.params.id;
+  let promise = model.getPledgesForKid(id, req.body);
+
+  promise.then(result => {
+    return result.error ? next(result) : res.status(200).json(result);
+  });
+
+  promise.catch(error => {
+    next(error);
+  });
+};
+
 createKid = (req, res, next) => {
   console.log(req.body);
   let promise = model.createKid(req.body);
@@ -67,6 +80,7 @@ deleteKidById = (req, res, next) => {
 module.exports = {
   getAllKids,
   getKidById,
+  getPledgesForKid,
   createKid,
   updateKid,
   deleteKidById,
