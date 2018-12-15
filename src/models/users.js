@@ -1,3 +1,5 @@
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const usersQuery = require('../../queries/users');
 
 const getAllUsers = () => {
@@ -13,6 +15,14 @@ const getAllUsers = () => {
 
 const getUserById = id => {
   user = usersQuery.getUserById(id);
+
+  return user.then(result => {
+    return !result ? { error: 'error retreiving user', status: 404 } : result;
+  });
+};
+
+const getUserByUserName = name => {
+  user = usersQuery.getUserByUserName(name);
 
   return user.then(result => {
     return !result ? { error: 'error retreiving user', status: 404 } : result;
@@ -36,10 +46,11 @@ const fetchKidsForUser = (id, body) => {
 
 const createUser = body => {
   console.log('body>>', body);
+  body.hashPass = bcrypt.hashSync(body.hashPass, 10);
   user = usersQuery.createUser(body);
 
   return user.then(result => {
-    return !result ? { error: 'error creating user', status: 500 } : result;
+    return !result ? { error: 'error creating user', status: 500 } : result[0];
   });
 };
 
@@ -62,6 +73,7 @@ const deleteUserById = id => {
 module.exports = {
   getAllUsers,
   getUserById,
+  getUserByUserName,
   fetchKidsForUser,
   createUser,
   updateUser,

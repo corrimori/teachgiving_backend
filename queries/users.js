@@ -10,6 +10,12 @@ getUserById = id => {
   return knex('users').where('id', id);
 };
 
+getUserByUserName = name => {
+  return knex('users')
+    .where('name', name)
+    .first();
+};
+
 //===================================================
 //  gets all kids for user
 //===================================================
@@ -17,22 +23,28 @@ getUserById = id => {
 fetchKidsForUser = (id, body) => {
   console.log('in fetch kids for user - queries ... ');
 
-  return (
-    knex('kids')
-      .join('users', 'users.id', '=', 'kids.user_id')
-      // .join('avatars', 'avatar.id', '=', 'kids.avatar_id')
-      .select(
-        'users.id as id',
-        'users.name as name',
-        'kids.id as kidId',
-        'kids.name as kidName',
-        'kids.runningTotal'
-        // 'kids.avatar_id as avatarId'
-      )
-      .where('user_id', id)
-      .distinct()
-  );
+  return knex('kids')
+    .join('users', 'users.id', '=', 'kids.user_id')
+    .join('avatars', 'avatars.id', '=', 'kids.avatar_id')
+    .select(
+      'users.id as id',
+      'users.name as name',
+      'kids.id as kidId',
+      'kids.name as kidName',
+      'kids.runningTotal',
+      'kids.avatar_id as avatarId',
+      'avatars.avatarImage as avatarImg'
+    )
+    .where('user_id', id)
+    .distinct();
 };
+
+// .then((kids)) => {
+//   let newKidsArray = kids.map((kids) => {
+//     return kids
+//   })
+//   res.send(data)
+// })
 
 createUser = body => {
   return knex('users')
@@ -79,6 +91,7 @@ deleteUserById = id => {
 module.exports = {
   getAllUsers,
   getUserById,
+  getUserByUserName,
   fetchKidsForUser,
   createUser,
   updateUser,

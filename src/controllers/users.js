@@ -1,3 +1,5 @@
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const model = require('../models/users');
 
 getAllUsers = (req, res, next) => {
@@ -41,6 +43,39 @@ fetchKidsForUser = (req, res, next) => {
   });
 };
 
+login = async (req, res, next) => {
+  let { name, password } = req.body;
+  let user = await model.getUserByUserName(name);
+  if (!user)
+    return res
+      .status(400)
+      .json({ status: 400, message: 'user name or password invalid' });
+  let isValid = await bcrypt.compare(password, user.hashPass);
+  console.log('is Valid?', isValid);
+  if (isValid) {
+    delete user.hashPass;
+    const timeIssued = Math.floor(Date.now() / 1000);
+    const timeExpires = timeIssued + 86400 * 28;
+    const token = await jwt.sign(
+      {
+        iss: 'teachgiving',
+        aud: 'teachgiving',
+        iat: timeIssued,
+        exp: timeExpires,
+        identity: user.id,
+      },
+      'secret'
+    );
+    return res
+      .set({ authentication: token })
+      .status(200)
+      .json(user);
+  }
+  return res
+    .status(400)
+    .json({ status: 400, message: 'user name or password invalid' });
+};
+
 createUser = (req, res, next) => {
   let promise = model.createUser(req.body);
 
@@ -82,6 +117,7 @@ module.exports = {
   getAllUsers,
   getUserById,
   fetchKidsForUser,
+  login,
   createUser,
   updateUser,
   deleteUserById,

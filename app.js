@@ -7,7 +7,7 @@ const app = express();
 
 if (process.env.NODE_ENV !== 'test') app.use(morgan('dev'));
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors({ exposedHeaders: ['authentication'] }));
 
 const userRoutes = require('./src/routes/users.js');
 app.use('/users', userRoutes);
