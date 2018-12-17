@@ -12,5 +12,10 @@ exports.seed = function(knex, Promise) {
         { id: 6, kid_id: 1, charity_id: 1, pledgeAmount: 0.5, numOfWeeks: 4 },
         { id: 7, kid_id: 2, charity_id: 1, pledgeAmount: 0.5, numOfWeeks: 6 },
       ]);
-    });
+    })
+    .then(() =>
+      knex.raw(
+        `SELECT setval('"pledges_id_seq"', (SELECT MAX("id") FROM "pledges"))`
+      )
+    );
 };

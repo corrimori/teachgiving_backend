@@ -7,7 +7,6 @@ getAllUsers = () => {
 };
 
 getUserById = id => {
-  console.log('testing different queries %%%%%%%%%%%%%%% ...');
   return knex('users').where('id', id);
   // return knex('users').join('kids', 'kids.user_id', 'users.id');
 };

@@ -82,6 +82,8 @@ login = async (req, res, next) => {
 };
 
 createUser = (req, res, next) => {
+  console.log('in createUser function controllers ...');
+  console.log('reqbody.name', req.body.name);
   let promise = model.createUser(req.body);
 
   promise.then(result => {
