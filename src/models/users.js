@@ -25,13 +25,14 @@ const getUserByUserName = name => {
   user = usersQuery.getUserByUserName(name);
 
   return user.then(result => {
+    console.log('result from models >>>>>>>>>>', result);
     return !result ? { error: 'error retreiving user', status: 404 } : result;
   });
 };
 
-//==========================================================
+//==========================================
 //  /:id/kids      gets all kids for a user
-//====================+=====================================
+//==========================================
 const fetchKidsForUser = (id, body) => {
   console.log('in fetch kids for user - models ... ');
 

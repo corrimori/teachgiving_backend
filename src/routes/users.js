@@ -7,6 +7,7 @@ router.get('/:id', ctrl.getUserById);
 router.get('/:id/kids', ctrl.fetchKidsForUser);
 router.post('/', ctrl.createUser);
 router.post('/login', ctrl.login);
+// router.post('/signup', ctrl.signup);
 router.put('/:id', ctrl.updateUser);
 router.delete('/:id', ctrl.deleteUserById);
 

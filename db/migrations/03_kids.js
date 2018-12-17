@@ -7,11 +7,7 @@ exports.up = function(knex, Promise) {
       .foreign('user_id')
       .references('id')
       .inTable('users');
-    table.integer('avatar_id');
-    table
-      .foreign('avatar_id')
-      .references('id')
-      .inTable('avatars');
+    table.string('avatarImage');
     table.float('runningTotal');
   });
 };

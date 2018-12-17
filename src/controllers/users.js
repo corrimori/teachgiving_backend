@@ -44,8 +44,12 @@ fetchKidsForUser = (req, res, next) => {
 };
 
 login = async (req, res, next) => {
+  console.log('in login function controllers ...');
   let { name, password } = req.body;
+  console.log('name>>>>>', name);
+  console.log('password>>>>>', password);
   let user = await model.getUserByUserName(name);
+  console.log('user from controller>>>>', user);
   if (!user)
     return res
       .status(400)
@@ -55,7 +59,8 @@ login = async (req, res, next) => {
   if (isValid) {
     delete user.hashPass;
     const timeIssued = Math.floor(Date.now() / 1000);
-    const timeExpires = timeIssued + 86400 * 28;
+    const timeExpires = timeIssued + 3600; // 1 hour
+    // const timeExpires = timeIssued + 86400 * 28; // 28 days
     const token = await jwt.sign(
       {
         iss: 'teachgiving',
