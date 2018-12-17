@@ -25,46 +25,24 @@ getUserByUserName = name => {
 fetchKidsForUser = (id, body) => {
   console.log('in fetch kids for user - queries ... ');
 
-  return (
-    knex('kids')
-      .join('users', 'users.id', '=', 'kids.user_id')
-      // .join('avatars', 'avatars.id', '=', 'kids.avatar_id')
-      .select(
-        'users.id as id',
-        'users.name as name',
-        'kids.id as kidId',
-        'kids.name as kidName',
-        'kids.runningTotal',
-        'kids.avatarImage'
-        // 'kids.avatar_id as avatarId',
-        // 'avatars.avatarImage as avatarImg'
-      )
-      .where('user_id', id)
-      .distinct()
-  );
+  // returns a nested array of pledges
+  return knex('kids')
+    .where('kids.user_id', id)
+    .then(kids => {
+      console.log('kids>>', kids);
+      const promises = kids.map(kid => {
+        return knex('pledges')
+          .where({ kid_id: kid.id })
+          .join('charities', 'charities.id', '=', 'pledges.charity_id')
+          .then(pledges => {
+            kid.pledges = pledges;
+            return kid;
+          });
+      });
+
+      return Promise.all(promises);
+    });
 };
-
-// returns a nested array of kids
-//   return knex('users').then(users => {
-//     const promises = users.map(user => {
-//       return knex('kids')
-//         .where({ user_id: user.id })
-//         .then(kids => {
-//           user.kids = kids;
-//           return user;
-//         });
-//     });
-//
-//     return Promise.all(promises);
-//   });
-// };
-
-// .then((kids)) => {
-//   let newKidsArray = kids.map((kids) => {
-//     return kids
-//   })
-//   res.send(data)
-// })
 
 createUser = body => {
   return knex('users')
