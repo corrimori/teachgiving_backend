@@ -4,10 +4,30 @@ exports.seed = function(knex, Promise) {
     .del()
     .then(function() {
       return knex('users').insert([
-        { id: 1, name: 'Cooper', hashPass: '00A00001' },
-        { id: 2, name: 'Lodge', hashPass: '000B0002' },
-        { id: 3, name: 'Jones', hashPass: '12345678' },
-        { id: 4, name: 'Andrews', hashPass: '87654E21' },
+        {
+          id: 1,
+          name: 'Cooper',
+          hashPass:
+            '$2a$10$tbInC/WzOEn4gr18XC5D3uhoFDvhcWUiDmdze1sSpjI/SS3AjtYCC',
+        },
+        {
+          id: 2,
+          name: 'Lodge',
+          hashPass:
+            '$2a$10$AWKknAd529.2d9yrH9cAiu95B2iJDkeoQ93B.tumqo.eWE3.w91sm',
+        },
+        {
+          id: 3,
+          name: 'Jones',
+          hashPass:
+            '$2a$10$bw2hib03nkHzvhmkSgNaoOmqoYgQ55Y0TYvtuYCACY2FFUsXkJUte',
+        },
+        {
+          id: 4,
+          name: 'Andrews',
+          hashPass:
+            '$2a$10$EJg7TQVclL933FQt6Cj/X.wFHDScxV.klOogW6TaLmEJ3SywKMbAO',
+        },
       ]);
     })
     .then(() =>
